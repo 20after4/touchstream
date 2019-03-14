@@ -209,7 +209,7 @@ onKey(
 	    	  case kKeyMeta_L:
 	    	  case kKeyMeta_R:
 	   			  down = new & kCGEventFlagMaskCommand;
-	   			  key = kKeyControl_L;
+	   			  //key = kKeyControl_L;
 	    		  break;
 	    	  case kKeyAlt_L:
 	    	  case kKeyAlt_R:
@@ -246,8 +246,6 @@ handleCGInputEvent(
 			ts_display_button(
 					ts_master_get_active(d->display.master),
 					ts_button[b], 1);
-			UInt32 modifiers;
-			MouseTrackingResult res;
 			Point pt;
 			CGEventRef event = CGEventCreate(NULL);
 			CGPoint mouse = CGEventGetLocation(event);
