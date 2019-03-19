@@ -193,30 +193,32 @@ onKey(
 
 	int down = eventKind == kCGEventKeyDown;
 	if (eventKind == kCGEventFlagsChanged) {
-	      CGEventFlags new = CGEventGetFlags(event);
-	      switch (key) {
-	    	  case kKeyShift_L:
-	    	  case kKeyShift_R:
-	   			  down = new & kCGEventFlagMaskShift;
-	    		  break;
-	    	  case kKeyControl_L:
-	    	  case kKeyControl_R:
-	   			  down = new & kCGEventFlagMaskControl;
-	    		  break;
-	    	  case kKeyCapsLock:
-	   			  down = new & kCGEventFlagMaskAlphaShift;
-	    		  break;
-	    	  case kKeyMeta_L:
-	    	  case kKeyMeta_R:
-	   			  down = new & kCGEventFlagMaskCommand;
-	   			  //key = kKeyControl_L;
-	    		  break;
-	    	  case kKeyAlt_L:
-	    	  case kKeyAlt_R:
-	   			  down = new & kCGEventFlagMaskAlternate;
-	    		  break;
-	    		  break;
-	      }
+		CGEventFlags new = CGEventGetFlags(event);
+		switch (key) {
+			case kKeyShift_L:
+			case kKeyShift_R:
+				down = new & kCGEventFlagMaskShift;
+				break;
+			case kKeyControl_L:
+			case kKeyControl_R:
+				down = new & kCGEventFlagMaskControl;
+				break;
+			case kKeyCapsLock:
+				down = new & kCGEventFlagMaskAlphaShift;
+				break;
+			case kKeyMeta_L:
+				down = new &kCGEventFlagMaskCommand;
+				key = kKeySuper_L;
+				break;
+			case kKeyMeta_R :
+				down = new &kCGEventFlagMaskCommand;
+				key = kKeySuper_R;
+				break;
+			case kKeyAlt_L:
+			case kKeyAlt_R:
+				down = new & kCGEventFlagMaskAlternate;
+				break;
+		}
 	}
 
 	V3("%s key %04x (%c) %s\n", __func__, key,
@@ -237,7 +239,7 @@ handleCGInputEvent(
 	ts_osx_server_p  d = refcon;
 	CGPoint pos;
 
-	static const int ts_button[] = {0, 2, 1};
+	static const int ts_button[] = {0, 2, 1, 7, 8};
 	switch(type) {
 		case kCGEventLeftMouseDown:
 		case kCGEventRightMouseDown:
